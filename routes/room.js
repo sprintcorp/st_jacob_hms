@@ -12,9 +12,7 @@ const advancedResults = require("../middleware/advancedResults");
 
 //Route links
 router.post('/', protect, upload.array("image"), authorize('admin'), createRoom);
-router.route('/').get(advancedResults(Room, {
-    path: "user",
-}), getRooms);
+router.route('/').get(advancedResults(Room), getRooms);
 router.route('/:id').get(getRoom).delete(protect, authorize('admin'), deleteRoom).put(protect, upload.array("image"), authorize('admin'), updateRoom);
 router.get('/_/requirement', getRoomByRequirement);
 router.get('/_/random', getRoomByRandom);

@@ -9,7 +9,6 @@ const path = require('path');
 //@accss Public
 exports.getCategories = asyncHandler(async(req, res, next) => {
 
-    // const category = await Category.find();
     res.status(200).json(res.advancedResults);
 });
 
