@@ -30,7 +30,7 @@ CategorySchema.pre("save", function(next) {
     next();
 });
 
-CategorySchema.virtual('rooms', {
+CategorySchema.virtual('category', {
     ref: 'Room',
     localField: '_id',
     foreignField: 'category',

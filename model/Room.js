@@ -47,4 +47,11 @@ RoomSchema.virtual('room', {
     justOne: false
 });
 
+// RoomSchema.virtual('category', {
+//     ref: 'Category',
+//     localField: '_id',
+//     foreignField: 'category',
+//     justOne: false
+// });
+
 module.exports = mongoose.model('Room', RoomSchema);

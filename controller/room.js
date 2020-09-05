@@ -17,7 +17,7 @@ exports.getRooms = asyncHandler(async(req, res, next) => {
 //@route GET /api/v1/rooms/:id
 //@accss Public
 exports.getRoom = asyncHandler(async(req, res, next) => {
-    const room = await Room.findById(req.params.id);
+    const room = await Room.findById(req.params.id).populate('category');
     res.status(200).json({ success: true, data: room });
 });
 
