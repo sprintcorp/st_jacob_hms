@@ -1,10 +1,11 @@
 const express = require("express");
 const upload = require("../utils/multer");
-const { register, login, logout, getMe, updateDetails, updatePassword, forgotPassword, resetPassword } = require('../controller/auth');
+const { register, login, logout, getMe, updateDetails, updatePassword, getUser, forgotPassword, resetPassword } = require('../controller/auth');
 const { protect } = require('../middleware/auth');
 const router = express.Router();
-
+const User = require('../model/User');
 router.post('/register', register);
+router.get('/users', advancedResults(User), getUser);
 router.post('/login', login);
 router.get('/logout', logout);
 router.get('/me', protect, getMe);
