@@ -48,6 +48,18 @@ exports.deleteUser = asyncHandler(async(req, res, next) => {
 
 });
 
+//@desc GET user
+//@route GET /api/v1/auth/user/:id
+//@accss Public
+exports.getUser = asyncHandler(async(req, res, next) => {
+    const user = await User.findById(req.params.id);
+    res.status(200).json({
+        success: true,
+        data: user
+    });
+
+});
+
 //@desc Login user
 //@route POST /api/v1/auth/login
 //@accss Public
