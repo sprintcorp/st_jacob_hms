@@ -12,15 +12,39 @@ const { random } = require("underscore");
 //@route POST /api/v1/auth/register
 //@accss Public
 exports.register = asyncHandler(async(req, res, next) => {
-    // if (req.body.role === "admin") {
-    //     req.body.role = "user"
-    // }
     const { firstname, lastname, email, password, role, address } = req.body;
 
     console.log(req.body);
     //Create user
     const user = await User.create({ firstname, lastname, email, password, role, address });
-    sendTokenResponse(user, 200, res);
+    res.status(200).json({
+        success: true,
+        data: user
+    });
+
+});
+
+//@desc Update user
+//@route PUT /api/v1/auth/user/:id
+//@accss Public
+exports.updateUser = asyncHandler(async(req, res, next) => {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({
+        success: true,
+        data: user
+    });
+
+});
+
+//@desc Delete user
+//@route DELETE /api/v1/auth/user/:id
+//@accss Public
+exports.deleteUser = asyncHandler(async(req, res, next) => {
+    const user = await User.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+        success: true,
+        data: "User successfully deleted"
+    });
 
 });
 
