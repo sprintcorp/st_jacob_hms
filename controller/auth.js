@@ -120,7 +120,7 @@ exports.getMe = asyncHandler(async(req, res, next) => {
 //@desc  Get Users
 //@route GET /api/v1/auth/user
 //@accss private
-exports.getUser = asyncHandler(async(req, res, next) => {
+exports.getUsers = asyncHandler(async(req, res, next) => {
     res.status(200).json(res.advancedResults);
 });
 
