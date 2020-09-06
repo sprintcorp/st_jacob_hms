@@ -4,6 +4,8 @@ const { register, login, logout, getMe, updateDetails, updatePassword, getUser, 
 const { protect } = require('../middleware/auth');
 const router = express.Router();
 const User = require('../model/User');
+const advancedResults = require('../middleware/advancedResults');
+
 router.post('/register', register);
 router.get('/users', advancedResults(User), getUser);
 router.post('/login', login);
