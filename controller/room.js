@@ -145,16 +145,14 @@ exports.updateRoom = asyncHandler(async(req, res, next) => {
 //@route DELETE /api/v1/rooms/:id
 //@accss Private
 exports.deleteRoom = asyncHandler(async(req, res, next) => {
-const checkIfRoomExist = await Room.findById(req.params.id);
-if (!checkIfRoomExist) {
-    return next(
-        new ErrorResponse(`Room not found with id of ${req.params.id}`, 404)
-    );
-}
-const room = await Room.findByIdAndDelete(req.params.id)
-if (Room) {
-    res.status(200).json({ success: true, data: "Room Successfully deleted" });
-}
-});
-}
+    const checkIfRoomExist = await Room.findById(req.params.id);
+    if (!checkIfRoomExist) {
+        return next(
+            new ErrorResponse(`Room not found with id of ${req.params.id}`, 404)
+        );
+    }
+    const room = await Room.findByIdAndDelete(req.params.id)
+    if (Room) {
+        res.status(200).json({ success: true, data: "Room Successfully deleted" });
+    }
 });
