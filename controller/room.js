@@ -51,12 +51,12 @@ exports.getRoomByRequirement = asyncHandler(async(req, res, next) => {
 //@accss Private
 exports.getRoomByRandom = asyncHandler(async(req, res, next) => {
     console.log(req.query.rand)
-    let no = 2;
-    if (req.query.rand == 3) {
-        no = 3;
-    }
+        // let no = 2;
+        // if (req.query.rand == 3) {
+        //     no = 3;
+        // }
 
-    const room = await Room.aggregate([{ $sample: { size: no } }]);
+    const room = await Room.aggregate([{ $sample: { size: 6 } }]);
     res.status(200).json({ success: true, length: Room.length, data: room });
 });
 
