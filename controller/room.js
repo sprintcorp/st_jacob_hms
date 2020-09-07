@@ -109,15 +109,9 @@ exports.createRoom = asyncHandler(async(req, res, next) => {
 //@route PUT /api/v1/rooms/:id
 //@accss Private
 exports.updateRoom = asyncHandler(async(req, res, next) => {
-    // console.log(req.files);
     req.body.user = req.user.id;
-
-    // req.body.features = req.body.features.split(',');
-    if (!req.files || _.isEmpty(req.files)) {
-        return next(new ErrorResponse(`No file uploaded`, 400));
-    }
-    const files = req.files
-    try {
+    if (req.files) {
+        const files = req.files
         let urls = [];
         let multiple = async(path) => await new cloudinary(path).upload();
         console.log(files);
@@ -129,17 +123,18 @@ exports.updateRoom = asyncHandler(async(req, res, next) => {
             urls.push(newPath);
             fs.unlinkSync(path);
         }
-        // console.log(urls);
-        if (urls) {
-            console.log(req.user)
-            req.body.image = urls;
-            const room = await Room.findByIdAndUpdate(req.params.id, req.body);
-            res.status(201).json({ success: true, data: room });
+    }
 
-        }
-        if (!urls) {
+    try {
+
+        if (urls) {
+            req.body.image = urls;
+        } else {
             return next(new ErrorResponse(`response not gotten from source`, 400));
         }
+        const room = await Room.findByIdAndUpdate(req.params.id, req.body);
+        res.status(201).json({ success: true, data: room });
+
     } catch (e) {
         console.log("err :", e);
         return next(new ErrorResonse(e, 400));
@@ -150,14 +145,16 @@ exports.updateRoom = asyncHandler(async(req, res, next) => {
 //@route DELETE /api/v1/rooms/:id
 //@accss Private
 exports.deleteRoom = asyncHandler(async(req, res, next) => {
-    const checkIfRoomExist = await Room.findById(req.params.id);
-    if (!checkIfRoomExist) {
-        return next(
-            new ErrorResponse(`Room not found with id of ${req.params.id}`, 404)
-        );
-    }
-    const room = await Room.findByIdAndDelete(req.params.id)
-    if (Room) {
-        res.status(200).json({ success: true, data: "Room Successfully deleted" });
-    }
+const checkIfRoomExist = await Room.findById(req.params.id);
+if (!checkIfRoomExist) {
+    return next(
+        new ErrorResponse(`Room not found with id of ${req.params.id}`, 404)
+    );
+}
+const room = await Room.findByIdAndDelete(req.params.id)
+if (Room) {
+    res.status(200).json({ success: true, data: "Room Successfully deleted" });
+}
+});
+}
 });
