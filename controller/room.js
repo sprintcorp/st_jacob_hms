@@ -27,7 +27,7 @@ exports.getRoom = asyncHandler(async(req, res, next) => {
 exports.getRoomBySlug = asyncHandler(async(req, res, next) => {
     const room = await Room.find({
         slug: req.params.slug
-    });
+    }).populate('category');
     res.status(200).json({ success: true, data: room });
 });
 
