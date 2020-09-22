@@ -82,7 +82,7 @@ class file_management {
 
     upload() {
         return new Q.Promise((resolve, reject) => {
-            cloudinary.v2.uploader.upload(this.file, { width: 850, height: 400 }, (err, res) => {
+            cloudinary.v2.uploader.upload(this.file, (err, res) => {
                 if (err) {
                     console.log('cloudinary err:', err);
                     reject(err);

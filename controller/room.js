@@ -56,7 +56,7 @@ exports.getRoomByRandom = asyncHandler(async(req, res, next) => {
         //     no = 3;
         // }
 
-    const room = await Room.aggregate([{ $sample: { size: 6 } }]);
+    const room = await Room.aggregate([{ $sample: { size: 3 } }]);
     res.status(200).json({ success: true, length: Room.length, data: room });
 });
 
