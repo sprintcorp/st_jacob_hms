@@ -23,12 +23,23 @@ const ReservationSchema = new mongoose.Schema({
         maxlength: [20, "Phone number can not be more than 20 characters"],
     },
 
-    address: {
-        type: String,
+    adult: {
+        type: Number,
     },
-    date: {
+    children: {
+        type: Number,
+    },
+    arrival: {
         type: Date,
         required: true
+    },
+    departure: {
+        type: Date,
+        required: true
+    },
+    message: {
+        type: String
+
     },
     room: {
         type: mongoose.Schema.ObjectId,
