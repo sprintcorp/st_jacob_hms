@@ -112,7 +112,10 @@ exports.createRoom = asyncHandler(async(req, res, next) => {
 //@accss Private
 exports.updateRoom = asyncHandler(async(req, res, next) => {
     req.body.user = req.user.id;
-    if (req.files) {
+    const checkIfRoomExist = await Room.findById(req.params.id);
+    req.body.image = checkIfRoomExist.image;
+    // console.log(req.files)
+    if (req.files.length !== 0) {
         const files = req.files
         let urls = [];
         let multiple = async(path) => await new cloudinary(path).upload();
@@ -125,17 +128,26 @@ exports.updateRoom = asyncHandler(async(req, res, next) => {
             urls.push(newPath);
             fs.unlinkSync(path);
         }
+        if (urls) {
+            req.body.image = urls;
+        } else {
+            return next(new ErrorResponse(`response not gotten from upload source`, 400));
+        }
+        // console.log("yesssssssssssssssssssssss")
     }
 
     try {
 
-        if (urls) {
-            req.body.image = urls;
+
+        const room = await Room.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        });
+        if (room) {
+            res.status(201).json({ success: true, data: room });
         } else {
-            return next(new ErrorResponse(`response not gotten from source`, 400));
+            res.status(500).json({ success: true, data: "room not updated" });
         }
-        const room = await Room.findByIdAndUpdate(req.params.id, req.body);
-        res.status(201).json({ success: true, data: room });
 
     } catch (e) {
         console.log("err :", e);
