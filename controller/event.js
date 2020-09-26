@@ -78,8 +78,11 @@ exports.createEvent = asyncHandler(async(req, res, next) => {
 //@route PUT /api/v1/events/:id
 //@accss Private
 exports.updateEvent = asyncHandler(async(req, res, next) => {
-
+    const check = await Event.findById(req.params.id);
+    req.body.image = check.image;
+    // console.log()
     if (req.file) {
+        // console.log(req.files.image)
         const files = req.file;
         try {
             let multiple = async(path) => await new cloudinary(path).upload();
