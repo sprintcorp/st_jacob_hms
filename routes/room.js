@@ -11,9 +11,9 @@ const advancedResults = require("../middleware/advancedResults");
 
 
 //Route links
-router.post('/', protect, upload.array("image"), authorize('admin'), createRoom);
+router.post('/', protect, upload.array("image"), createRoom);
 router.route('/').get(advancedResults(Room, 'category'), getRooms);
-router.route('/:id').get(getRoom).delete(protect, authorize('admin'), deleteRoom).put(protect, upload.array("image"), authorize('admin'), updateRoom);
+router.route('/:id').get(getRoom).delete(protect, deleteRoom).put(protect, upload.array("image"), updateRoom);
 router.get('/_/requirement', getRoomByRequirement);
 router.get('/_/random', getRoomByRandom);
 router.route('/_/:slug').get(getRoomBySlug);

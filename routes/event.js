@@ -11,11 +11,11 @@ const advancedResults = require("../middleware/advancedResults");
 
 
 //Route links
-router.post('/', protect, upload.single("image"), authorize('admin'), createEvent);
+router.post('/', protect, upload.single("image"), createEvent);
 router.route('/').get(advancedResults(Event, {
     path: "user",
 }), getEvents);
-router.route('/:id').get(getEvent).delete(protect, authorize('admin'), deleteEvent).put(protect, upload.single("image"), authorize('admin'), updateEvent);
+router.route('/:id').get(getEvent).delete(protect, deleteEvent).put(protect, upload.single("image"), updateEvent);
 router.get('/_/random', getEventByRandom);
 router.route('/_/:slug').get(getEventBySlug);
 // router.get('/radius/:zipcode/:distance', getEventByRadius)

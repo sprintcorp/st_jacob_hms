@@ -1,4 +1,6 @@
 const Room = require("../model/Room");
+const Event = require("../model/Event");
+const Reservation = require("../model/Reservation");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const _ = require("underscore");
